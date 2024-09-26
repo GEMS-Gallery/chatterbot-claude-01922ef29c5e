@@ -84,9 +84,9 @@
         <div id="chatSection">
             <div id="chatbox"></div>
             <textarea id="userInput" rows="3" placeholder="Type your message here..."></textarea>
-            <button onclick="sendMessage()">Send</button>
-            <button onclick="resetConversation()">Reset Conversation</button>
-            <button onclick="saveChat()">Save Chat</button>
+            <button id="sendButton">Send</button>
+            <button id="resetButton">Reset Conversation</button>
+            <button id="saveButton">Save Chat</button>
             <div id="tokenUsage"></div>
         </div>
     </div>
@@ -95,8 +95,11 @@
         import { Actor, HttpAgent } from "@dfinity/agent";
         import { idlFactory } from "./declarations/backend/backend.did.js";
 
+        // Replace this with your actual canister ID
+        const BACKEND_CANISTER_ID = "YOUR_BACKEND_CANISTER_ID";
+
         const agent = new HttpAgent();
-        const backend = Actor.createActor(idlFactory, { agent, canisterId: process.env.BACKEND_CANISTER_ID });
+        const backend = Actor.createActor(idlFactory, { agent, canisterId: BACKEND_CANISTER_ID });
 
         let conversationHistory = [];
         const MAX_CONTEXT_TOKENS = 200000;
@@ -170,10 +173,10 @@
         // Initialize the application when the page loads
         window.onload = function() {
             updateTokenUsage();
+            document.getElementById('sendButton').addEventListener('click', sendMessage);
+            document.getElementById('resetButton').addEventListener('click', resetConversation);
+            document.getElementById('saveButton').addEventListener('click', saveChat);
         };
-
-        // Make sendMessage function globally accessible
-        window.sendMessage = sendMessage;
     </script>
 </body>
 </html>
