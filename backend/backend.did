@@ -1,0 +1,10 @@
+type Message = 
+ record {
+   content: text;
+   sender: text;
+ };
+service : {
+  addMessage: (text, text) -> ();
+  getClaudeResponse: (text) -> (text);
+  getConversationHistory: () -> (vec Message) query;
+}
